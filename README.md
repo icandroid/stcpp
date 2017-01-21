@@ -13,6 +13,6 @@ folder `st`.
 to run the test, `gtest` is required.
 
 to build the library and test, just:
-1. create a folder named `build` in the project root directory.
-2. change to the directory `build`.
-3. run `cmake .. && make`
+1. create a folder named `build` in the project root directory.<br>
+2. change to the directory `build`.<br>
+3. run `cmake .. && make`<br>

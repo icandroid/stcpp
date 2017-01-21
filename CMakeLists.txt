@@ -1,0 +1,33 @@
+cmake_minimum_required( VERSION 2.8.1)
+project(stcpp)
+
+#set( debug   "-DDEBUG -g")
+set( debug   "-O3")
+set( proj_dir "${PROJECT_SOURCE_DIR}")
+set( gtest_dir "/opt/gtest" )
+set( gtest_lib "${gtest_dir}/lib/libgtest.a  ${gtest_dir}/lib/libgtest_main.a" )
+include_directories("${proj_dir}/src")
+include_directories("${proj_dir}")
+include_directories("${gtest_dir}/include")
+
+add_definitions( "--std=c++11 -DLINUX -D__x86_64__ -D_REENTRANT ${debug}" )
+
+add_library( stcpp      ${proj_dir}/src/st-thread.cc
+                        ${proj_dir}/src/st-io.cc )
+link_directories( "${gtest_dir}/lib" )
+add_executable(testThread       test/testThread.cc )
+add_executable(testManyThread   test/testManyThread.cc )
+add_executable(testJoinableThread   test/testJoinableThread.cc )
+add_executable(testST       test/testST.cc )
+add_executable(testNet      test/testNet.cc )
+add_executable(testNetRW    test/testNetRW.cc )
+add_executable(testLambda   test/testLambda.cc )
+
+set(libst   "${proj_dir}/st/libst.a")
+target_link_libraries(testThread        gtest_main gtest pthread stcpp ${libst})
+target_link_libraries(testManyThread    gtest_main gtest pthread stcpp ${libst})
+target_link_libraries(testJoinableThread gtest_main gtest pthread stcpp ${libst})
+target_link_libraries(testST        gtest_main gtest pthread ${libst})
+target_link_libraries(testLambda    gtest_main gtest pthread ${libst})
+target_link_libraries(testNet       gtest_main gtest pthread stcpp ${libst})
+target_link_libraries(testNetRW     gtest_main gtest pthread stcpp ${libst})

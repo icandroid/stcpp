@@ -16,3 +16,21 @@ to build the library and test, just:<br>
 1. create a folder named `build` in the project root directory.<br>
 2. change to the directory `build`.<br>
 3. run `cmake .. && make`<br>
+
+typical usage:<br>
+```cpp
+stcpp::JoinableThread*  threads[COUNT_LOOP];
+for(int i = 0; i < COUNT_LOOP; i++){
+    threads[i] = new stcpp::JoinableThread(
+        [](int a ) {
+            stcpp::Thread::usleep(1);
+            somework();
+            count++;
+            stcpp::Thread::exit();
+        }, 100 );
+}
+
+for(int i = 0; i < COUNT_LOOP; i++){
+    threads[i]->join();
+}
+```
